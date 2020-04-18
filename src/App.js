@@ -1,25 +1,75 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
 
+import Header from './components/Header';
+import SearchBar from './components/SearchBar';
+import MovieList from './components/MovieList';
+import Character from './components/Character';
+
+import { SearchContext } from './SearchContext';
+
 function App() {
+  const [movies, setMovies] = useState([]);
+  const [characters, setCharacters] = useState([]);
+  const [isCharacterMode, setIsCharacterMode] = useState(false);
+  const [searchedCharacter, setSearchedCharacter] = useState('');
+
+  async function getMovies() {
+    try {
+      const movies = await axios.get('https://ghibliapi.herokuapp.com/films');
+
+      movies.data.map((movie) =>
+        Promise.all(movie.people.map((url) => fetch(url).then((res) => res.json()))).then(
+          (data) => (movie.people = data),
+        ),
+      );
+
+      setMovies(movies.data);
+    } catch (err) {
+      if (err) {
+        console.log(err);
+      }
+    }
+  }
+
+  async function getCharacters() {
+    try {
+      fetch('https://ghibliapi.herokuapp.com/people')
+        .then((res) => res.json())
+        .then((data) => setCharacters(data));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const findCharacter = (charName) => {
+    return characters.find((char) => char.name.toLowerCase() === charName.toLowerCase());
+  };
+
+  let foundCharacter = {};
+
+  if (isCharacterMode) {
+    foundCharacter = findCharacter(searchedCharacter);
+  }
+
+  useEffect(() => {
+    getMovies();
+    getCharacters();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <SearchContext.Provider value={{ setIsCharacterMode, setSearchedCharacter }}>
+      <div className='App'>
+        <Header toHome={setIsCharacterMode} />
+        <SearchBar />
+        {!isCharacterMode ? (
+          <MovieList movies={movies} />
+        ) : (
+          <Character character={foundCharacter} setIsCharacterMode={setIsCharacterMode} />
+        )}
+      </div>
+    </SearchContext.Provider>
   );
 }
 
