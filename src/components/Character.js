@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-const Characters = ({ character, setIsCharacterMode }) => {
+import { AppContext } from '../AppContext';
+
+const Characters = () => {
+  const { setIsCharacterMode, character } = useContext(AppContext);
   return (
     <>
       <p id='get-back' onClick={() => setIsCharacterMode(false)}>{`<--- Go back`}</p>

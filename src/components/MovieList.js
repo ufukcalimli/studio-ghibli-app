@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+
+import { AppContext } from '../AppContext';
 
 const Movie = ({ movie }) => {
   const [collapse, setCollapse] = useState(false);
@@ -23,7 +25,8 @@ const Movie = ({ movie }) => {
   );
 };
 
-const MovieList = ({ movies }) => {
+const MovieList = () => {
+  const { movies } = useContext(AppContext);
   return (
     <div className='movie-list-container'>
       {movies.map((movie) => (

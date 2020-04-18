@@ -7,7 +7,7 @@ import SearchBar from './components/SearchBar';
 import MovieList from './components/MovieList';
 import Character from './components/Character';
 
-import { SearchContext } from './SearchContext';
+import { AppContext } from './AppContext';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -59,17 +59,20 @@ function App() {
   }, []);
 
   return (
-    <SearchContext.Provider value={{ setIsCharacterMode, setSearchedCharacter }}>
+    <AppContext.Provider
+      value={{
+        movies: movies,
+        character: foundCharacter,
+        setIsCharacterMode,
+        setSearchedCharacter,
+      }}
+    >
       <div className='App'>
-        <Header toHome={setIsCharacterMode} />
+        <Header />
         <SearchBar />
-        {!isCharacterMode ? (
-          <MovieList movies={movies} />
-        ) : (
-          <Character character={foundCharacter} setIsCharacterMode={setIsCharacterMode} />
-        )}
+        {!isCharacterMode ? <MovieList /> : <Character />}
       </div>
-    </SearchContext.Provider>
+    </AppContext.Provider>
   );
 }
 

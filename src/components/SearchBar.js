@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 
-import { SearchContext } from '../SearchContext';
+import { AppContext } from '../AppContext';
 
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('');
-  const { setIsCharacterMode, setSearchedCharacter } = useContext(SearchContext);
+  const { setIsCharacterMode, setSearchedCharacter } = useContext(AppContext);
 
   const handleInput = (value) => {
     setSearchValue(value);
