@@ -1,12 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { AppContext } from '../AppContext';
-
-const Characters = () => {
-  const { setIsCharacterMode, character } = useContext(AppContext);
+const Characters = ({ character }) => {
   return (
     <>
-      <p id='get-back' onClick={() => setIsCharacterMode(false)}>{`<--- Go back`}</p>
       <div className='character'>
         <ul>
           <li>Name: {character.name}</li>

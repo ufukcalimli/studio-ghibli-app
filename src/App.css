@@ -70,6 +70,7 @@ input {
 
 .character {
   width: 200px;
+  margin: 2%;
   height: fit-content;
   border: 1px solid black;
   border-radius: 10px;

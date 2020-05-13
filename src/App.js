@@ -5,15 +5,15 @@ import './App.css';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import MovieList from './components/MovieList';
-import Character from './components/Character';
+import SearchResults from './components/SearchResults';
 
 import { AppContext } from './AppContext';
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [characters, setCharacters] = useState([]);
-  const [isCharacterMode, setIsCharacterMode] = useState(false);
-  const [searchedCharacter, setSearchedCharacter] = useState('');
+  const [isSearchMode, setIsSearchMode] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
   async function getMovies() {
     try {
@@ -43,16 +43,6 @@ function App() {
     }
   }
 
-  const findCharacter = (charName) => {
-    return characters.find((char) => char.name.toLowerCase() === charName.toLowerCase());
-  };
-
-  let foundCharacter = {};
-
-  if (isCharacterMode) {
-    foundCharacter = findCharacter(searchedCharacter);
-  }
-
   useEffect(() => {
     getMovies();
     getCharacters();
@@ -61,16 +51,18 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        movies: movies,
-        character: foundCharacter,
-        setIsCharacterMode,
-        setSearchedCharacter,
+        movies,
+        characters,
+        isSearchMode,
+        setIsSearchMode,
+        searchResults,
+        setSearchResults,
       }}
     >
       <div className='App'>
         <Header />
         <SearchBar />
-        {!isCharacterMode ? <MovieList /> : <Character />}
+        {!isSearchMode ? <MovieList /> : <SearchResults />}
       </div>
     </AppContext.Provider>
   );

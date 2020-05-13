@@ -4,15 +4,23 @@ import { AppContext } from '../AppContext';
 
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('');
-  const { setIsCharacterMode, setSearchedCharacter } = useContext(AppContext);
+
+  const { characters, setIsSearchMode, searchResults, setSearchResults } = useContext(AppContext);
+
+  const findCharacters = (charName) => {
+    return characters.filter((c) => c.name.toLowerCase() === charName.toLowerCase());
+  };
 
   const handleInput = (value) => {
     setSearchValue(value);
   };
 
   const submitSearch = () => {
-    setSearchedCharacter(searchValue);
-    setIsCharacterMode(true);
+    if (searchValue !== '' || searchValue.length >= 3) {
+      setSearchResults(findCharacters(searchValue));
+      console.log(searchResults);
+      setIsSearchMode(true);
+    }
   };
 
   return (
