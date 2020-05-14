@@ -8,14 +8,11 @@ const SearchBar = () => {
   const { characters, setIsSearchMode, searchResults, setSearchResults } = useContext(AppContext);
 
   const findCharacters = (charName) => {
-    return characters.filter((c) => c.name.toLowerCase() === charName.toLowerCase());
-  };
+    return characters.filter((c) => c.name.toLowerCase() === charName.toLowerCase() || c.name.toLowerCase().includes(charName.toLowerCase())); 
+  }
 
-  const handleInput = (value) => {
+  const submitSearch = (value) => {
     setSearchValue(value);
-  };
-
-  const submitSearch = () => {
     if (searchValue !== '' || searchValue.length >= 3) {
       setSearchResults(findCharacters(searchValue));
       console.log(searchResults);
@@ -28,9 +25,9 @@ const SearchBar = () => {
       <input
         autoFocus
         placeholder='Search characters...'
-        onChange={(event) => handleInput(event.target.value)}
+        onChange={(event) => submitSearch(event.target.value)}
       ></input>
-      <button onClick={() => submitSearch()} id='search-btn'>
+      <button onClick={() => submitSearch(searchValue)} id='search-btn'>
         Search
       </button>
     </div>

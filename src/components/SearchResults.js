@@ -9,9 +9,9 @@ const SearchResults = () => {
   return (
     <>
       <p id='get-back' onClick={() => setIsSearchMode(false)}>{`<--- Go back`}</p>
-      {searchResults.map((character) => (
+      {searchResults.length > 1 ? searchResults.map((character) => (
         <Character character={character} key={character.id} />
-      ))}
+      )): null}
     </>
   );
 };
