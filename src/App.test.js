@@ -1,9 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
+import '@testing-library/jest-dom/extend-expect'
 
-test('renders learn react link', () => {
+// Components
+import App from './App';
+import SearchBar from './components/SearchBar'
+
+test('renders app component', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const header = getByText(/Studio Ghibli/i);
+  expect(header).toBeInTheDocument();
 });
+

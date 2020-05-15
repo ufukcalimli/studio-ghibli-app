@@ -5,17 +5,19 @@ import { AppContext } from '../AppContext';
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('');
 
-  const { characters, setIsSearchMode, searchResults, setSearchResults } = useContext(AppContext);
+  const { characters, setIsSearchMode, setSearchResults } = useContext(AppContext);
 
   const findCharacters = (charName) => {
-    return characters.filter((c) => c.name.toLowerCase() === charName.toLowerCase() || c.name.toLowerCase().includes(charName.toLowerCase())); 
+    return characters
+    .filter((c) => 
+              c.name.toLowerCase() === charName.toLowerCase() 
+              || c.name.toLowerCase().includes(charName.toLowerCase())); 
   }
 
   const submitSearch = (value) => {
     setSearchValue(value);
     if (searchValue !== '' || searchValue.length >= 3) {
       setSearchResults(findCharacters(searchValue));
-      console.log(searchResults);
       setIsSearchMode(true);
     }
   };
