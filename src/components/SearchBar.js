@@ -23,7 +23,7 @@ const SearchBar = () => {
 		setSearchValue(value);
 		// assign a default value ('') to argument so no need to check for more than it's length
 		if (value.length >= 3) {
-			// setState (or the useState hook equivalent) is asynchronous. So the state prop searchValue only has the assigned value ('value') in the _next_ call to submitSearch(). Use findCharacters() with value if you want to search for the _current_ input value
+			// setState (or the useState hook equivalent) is asynchronous. So the state prop searchValue only has the assigned value ('value') in the _next_ call to submitSearch(). Use findCharacters() if you want to search for the _current_ input value
 			setSearchResults(findCharacters(value));
 			setIsSearchMode(true);
 		}
